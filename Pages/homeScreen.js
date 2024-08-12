@@ -34,18 +34,18 @@ const styles = StyleSheet.create({
     height: undefined, // Maintain aspect ratio
     aspectRatio: 1, // Adjust this based on your logo's aspect ratio
     padding: 10,
-    marginTop: 81,
+    marginTop: 55,
   },
   text1: {
     position: 'absolute',
-    marginTop: 305, // Position the text at Y-axis 297
+    marginTop: 275, // Position the text at Y-axis 297
     fontSize: 20,
     color: '#666666',
     textAlign: 'center', // Center the text horizontally
   },
   text2: {
       position: 'absolute',
-      marginTop: 368, // Position the text at Y-axis 297
+      marginTop: 345, // Position the text at Y-axis 297
       fontSize: 36,
       padding: 15,
       color: '#4B4848',
@@ -63,7 +63,10 @@ const styles = StyleSheet.create({
       },
 
 footer: {
-    marginTop: 450,
-    alignItems: 'center',
-  },
+      position: 'absolute',  // Position the footer absolutely
+      bottom: 90,  // Adjust this value as per your requirement
+      left: 0,
+      right: 0,
+      alignItems: 'center',  // Center items horizontally
+    },
 });

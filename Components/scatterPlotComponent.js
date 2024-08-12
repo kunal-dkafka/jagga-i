@@ -1,32 +1,81 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { VictoryScatter, VictoryChart } from 'victory-native';
-import { VictoryTheme } from 'victory-native';
+// ScatterPlot.js
+import React from 'react';
+import { View } from 'react-native';
+import Svg, { Circle, Text, Line } from 'react-native-svg';
 
-export default function ScatterPlotComponent() {
+const ScatterPlot = ({ data }) => {
+  const width = 300;
+  const height = 300;
+  const margin = 30;
+
+  const strategies = data.reduce((acc, strategy) => {
+    strategy.stocks.forEach(stock => {
+      acc.push({
+        ...stock,
+        strategy: strategy.strategy,
+      });
+    });
+    return acc;
+  }, []);
+
+  const maxProfit = Math.max(...strategies.map(stock => stock["profit%"]));
+  const maxRisk = Math.max(...strategies.map(stock => stock["risk%"]));
+
+  const getColor = (likelihood) => {
+    const red = 255 - (likelihood * 255);
+    const green = likelihood * 255;
+    return `rgb(${red}, ${green}, 0)`;
+  };
+
+  const getX = (profit) => {
+    return margin + (profit / maxProfit) * (width - 2 * margin);
+  };
+
+  const getY = (risk) => {
+    return height - margin - (risk / maxRisk) * (height - 2 * margin);
+  };
 
   return (
-      <VictoryChart
-        domain={{ x: [0, 5], y: [0, 7] }}
-      >
-        <VictoryScatter
-          size={7}
-          data={[
-            { x: 1, y: 2 },
-            { x: 2, y: 3 },
-            { x: 3, y: 5 },
-            { x: 4, y: 4 },
-            { x: 5, y: 7 }
-          ]}
+    <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 50 }}>
+      <Svg width={width} height={height}>
+        {/* Axes */}
+        <Line
+          x1={margin}
+          y1={height - margin}
+          x2={width - margin}
+          y2={height - margin}
+          stroke="black"
         />
-      </VictoryChart>);
-
+        <Line
+          x1={margin}
+          y1={margin}
+          x2={margin}
+          y2={height - margin}
+          stroke="black"
+        />
+        {/* Data points */}
+        {strategies.map((stock, index) => (
+          <React.Fragment key={index}>
+            <Circle
+              cx={getX(stock["profit%"])}
+              cy={getY(stock["risk%"])}
+              r={5}
+              fill={getColor(stock.likelihood)}
+            />
+            <Text
+              x={getX(stock["profit%"])}
+              y={getY(stock["risk%"])}
+              fontSize={10}
+              fill="black"
+              textAnchor="middle"
+            >
+              {stock.symbol}
+            </Text>
+          </React.Fragment>
+        ))}
+      </Svg>
+    </View>
+  );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default ScatterPlot;

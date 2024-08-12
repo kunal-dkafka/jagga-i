@@ -17,6 +17,7 @@ const NonAuthFlowLayout= ({children}) => {
   return (
     <View style={styles.container}>
         <BackNavButton />
+
         <View styles={styles.centerContainer}>
              <SmallLogo />
         </View>
@@ -51,3 +52,4 @@ centerContainer: {
 });
 
 export default NonAuthFlowLayout;
+

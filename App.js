@@ -6,6 +6,9 @@ import HomeScreen from './Pages/homeScreen';
 import NonAuthFlowLayout from './Layouts/nonAuthFlowLayout';
 import StrategyScanner from './Pages/strategyScannerPage';
 import OpportunityScanPage from './Pages/opportunityScanPage';
+import BlankScreen from './Pages/blankScreen';
+import OtpScreen from './Pages/otpScreen';
+import PhoneNumberInput from './Pages/PhoneNumberInput';
 
 
 const NonAuthStack = createStackNavigator();
@@ -14,8 +17,8 @@ const AuthStack = createStackNavigator();
 function NonAuthNavigator() {
   return (
     <NonAuthStack.Navigator screenOptions={{headerShown: false}}>
-      <NonAuthStack.Screen name="StrategyScanner" component={StrategyScanner} />
-      <NonAuthStack.Screen name="OpportunityScanPage" component={OpportunityScanPage} />
+      <NonAuthStack.Screen name="PhoneNumberInput" component={PhoneNumberInput} />
+      <NonAuthStack.Screen name="OtpScreen" component={OtpScreen} />
     </NonAuthStack.Navigator>
   );
 }
